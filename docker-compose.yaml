@@ -2,21 +2,23 @@ version: "2"
 
 services:
     www:
-        build: ./docker/alpine/3.7/lamp/php/
+        #build: ./docker/alpine/3.7/lamp/php7/
+        build: ./docker/alpine/3.3/lamp/php5.3/ #rewrite here
         volumes:
             - ./:/docker
             - ./html:/var/www/localhost/htdocs
         ports:
             - 8080:80
     mysql:
-        image: mysql:5.7
+        image: mysql:5.5
         ports:
             - 3306:3306
         environment:
             - MYSQL_DATABASE=db
             - MYSQL_ROOT_PASSWORD=password
         volumes:
-            - ./docker/mysql/conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+            #- ./docker/mysql/5.7/conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf #5.7
+            - ./docker/mysql/5.5/conf/my.cnf:/etc/mysql/my.cnf #5.5
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         environment:
