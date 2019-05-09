@@ -49,6 +49,8 @@ RUN cd "/tmp/php" && \
       --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
       --with-curl \
       --with-zlib \
+      --with-pdo-mysql \
+      --with-mysqli \
       --with-openssl && \
     make && make install && make clean
 
