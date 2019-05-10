@@ -3,7 +3,7 @@ version: "2"
 services:
     www:
         #build: ./docker/alpine/3.7/lamp/php7/
-        build: ./docker/alpine/3.3/lamp/php5.3/ #rewrite here
+        build: ./docker/alpine/3.3/lamp/php5.3/
         volumes:
             - ./:/docker
             - ./html:/var/www/localhost/htdocs

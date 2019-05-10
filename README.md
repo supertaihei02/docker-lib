@@ -2,6 +2,11 @@
 
 自作したdocker環境を残す
 
+COMPOSEファイルを設定するとデフォルトのdocker-compose.ymlが変わる。
+
+```
+export COMPOSE_FILE=docker-compose.alpine3.3-lemp.yml
+```
 
 ## list
 

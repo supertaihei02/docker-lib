@@ -1,0 +1,50 @@
+version: "2"
+
+services:
+    nginx:
+        image: nginx:alpine
+        ports:
+            - 8080:80
+        restart: "always"
+        links:
+              - app
+        depends_on:
+              - app
+        volumes:
+              - ./docker/alpine/3.3/lemp/php5.3/www/conf/nginx.conf:/etc/nginx/nginx.conf
+              - ./docker/alpine/3.3/lemp/php5.3/www/conf/default.conf:/etc/nginx/conf.d/default.conf
+              - ./html:/var/www/html
+    app:
+        build: ./docker/alpine/3.3/lemp/php5.3/app/
+        volumes:
+          - ./:/docker
+          - ./html:/var/www/html
+          - ./logs/nginx:/var/log/nginx
+          - ./logs/php-fpm:/var/log/php-fpm
+        links:
+          - mysql
+        ports:
+          - 9000:9000
+    mysql:
+        image: mysql:5.5
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_DATABASE=db
+            - MYSQL_ROOT_PASSWORD=password
+        volumes:
+            - ./docker/mysql/5.5/conf/my.cnf:/etc/mysql/my.cnf #5.5
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mysql
+            - PMA_USER=root
+            - PMA_PASSWORD=password
+        links:
+            - mysql
+        ports:
+            - 8081:80
+        volumes:
+            - ./docker/phpmyadmin/sessions:/sessions
+
